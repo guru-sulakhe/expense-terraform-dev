@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "guru97s-remote-state"
-    key    = "expense-terraform-dev"
+    bucket = "guru97s-remote-vpc"
+    key    = "expense-terraform-vpc"
     region = "us-east-1"
-    dynamodb_table = "guru97s-locking-dynamodb"
+    dynamodb_table = "guru97s-locking-dynamodb-vpc"
   }
 }
 # by including backend s3 terraform will create .state file in s3-bucket of AWS
