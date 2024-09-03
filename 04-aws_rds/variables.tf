@@ -11,3 +11,6 @@ variable "common_tags" {
         Terraform = "true"
     }
 }
+variable "zone_name" {
+    default = "guru97s.cloud"
+}
