@@ -56,6 +56,7 @@ resource "aws_security_group_rule" "db_backend" {
   security_group_id = module.db.sg_id
 }
 
+# allowing only 3306 port traffic of db from the instances which are created on sg(expense-dev-bastion)
 resource "aws_security_group_rule" "db_bastion" {
   type              = "ingress"
   from_port         = 3306
