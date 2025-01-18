@@ -1,6 +1,6 @@
 #SSM parameters help in storing various project resources ID'S for the external uses in the projects.
 #It also acts as a central repository in AWS for strong the various resources ID'S
-resource "aws_ssm_parameter" "vpc_id" {
+resource "aws_ssm_parameter" "vpc_id" { # accessing vpc_id from the module and stroring it in the AWS SSM Parameter
   name  = "/${var.project_name}/${var.environment}/vpc_id"
   type  = "String"
   value = module.vpc.vpc_id #vpc_id shoudld be included in outputs.tf of module vpc
