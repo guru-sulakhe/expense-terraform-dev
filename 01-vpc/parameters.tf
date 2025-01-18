@@ -1,3 +1,5 @@
+#SSM parameters help in storing various project resources ID'S for the external uses in the projects.
+#It also acts as a central repository in AWS for strong the various resources ID'S
 resource "aws_ssm_parameter" "vpc_id" {
   name  = "/${var.project_name}/${var.environment}/vpc_id"
   type  = "String"
