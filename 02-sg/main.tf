@@ -47,34 +47,38 @@ module "ansible"{
 }
 #DB is accepting connections from backend
 # allowing only 3306 port traffic of db from the instances which are created on sg(expense-dev-backend)
+# Thus building a connection between db and backend by creating the new inbound rules in db, which will connects to backend
 resource "aws_security_group_rule" "db_backend" {
   type              = "ingress"
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
   source_security_group_id = module.backend.sg_id # source refers to where you getting traffic from i..e sg(expense-dev-backend)
-  security_group_id = module.db.sg_id
+  security_group_id = module.db.sg_id #creating inboound rule in db security group
 }
 
+#DB is accepting connections from bastion
 # allowing only 3306 port traffic of db from the instances which are created on sg(expense-dev-bastion)
+# Thus building a connection between db and bastion by creating the new inbound rules in db, which will connects to bastion 
 resource "aws_security_group_rule" "db_bastion" {
   type              = "ingress"
   from_port         = 3306
   to_port           = 3306
   protocol          = "tcp"
   source_security_group_id = module.bastion.sg_id # source refers to where you getting traffic from i..e sg(expense-dev-bastion)
-  security_group_id = module.db.sg_id
+  security_group_id = module.db.sg_id #creating inboound rule in db security group
 }
 
 #backend is accepting connections from frontend
 # allowing only 8080 port traffic of backend from the instances which are created on sg(expense-dev-frontend)
+# Thus building a connection between backend and frontend by creating the new inbound rules in backend, which will connects to frontend 
 resource "aws_security_group_rule" "backend_frontend" {
   type              = "ingress"
   from_port         = 8080
   to_port           = 8080
   protocol          = "tcp"
   source_security_group_id = module.frontend.sg_id # source refers to where you getting traffic from i..e sg(expense-dev-frontend)
-  security_group_id = module.backend.sg_id
+  security_group_id = module.backend.sg_id #creating inboound rule in backend security group
 }
 
 resource "aws_security_group_rule" "backend_bastion" {
@@ -91,7 +95,7 @@ resource "aws_security_group_rule" "backend_ansible" {
   to_port           = 22
   protocol          = "tcp"
   source_security_group_id = module.ansible.sg_id # source refers to where you getting traffic from i..e sg(expense-dev-frontend)
-  security_group_id = module.backend.sg_id
+  security_group_id = module.backend.sg_id #creating inboound rule in backend security group
 }
 # frontend is accepting connections from public
 # allowing only 80 port traffic of frontend from public
@@ -101,7 +105,7 @@ resource "aws_security_group_rule" "frontend_public" {
   to_port           = 80
   protocol          = "tcp"
   cidr_blocks = ["0.0.0.0/0"] # source refers to where you getting traffic from public
-  security_group_id = module.frontend.sg_id
+  security_group_id = module.frontend.sg_id #creating inboound rule in frontend security group
 }
 
 resource "aws_security_group_rule" "frontend_bastion" {
@@ -110,7 +114,7 @@ resource "aws_security_group_rule" "frontend_bastion" {
   to_port           = 22
   protocol          = "tcp"
   source_security_group_id = module.bastion.sg_id # source refers to where you getting traffic from public
-  security_group_id = module.frontend.sg_id
+  security_group_id = module.frontend.sg_id 
 }
 resource "aws_security_group_rule" "frontend_ansible" {
   type              = "ingress"
@@ -118,7 +122,7 @@ resource "aws_security_group_rule" "frontend_ansible" {
   to_port           = 22
   protocol          = "tcp"
   source_security_group_id = module.ansible.sg_id # source refers to where you getting traffic from public
-  security_group_id = module.frontend.sg_id
+  security_group_id = module.frontend.sg_id #creating inboound rule in frontend security group
 }
 
 # bastion to public
