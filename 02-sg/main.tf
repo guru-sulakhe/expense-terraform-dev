@@ -104,7 +104,7 @@ resource "aws_security_group_rule" "frontend_public" {
   from_port         = 80
   to_port           = 80
   protocol          = "tcp"
-  cidr_blocks = ["0.0.0.0/0"] # source refers to where you getting traffic from public
+  cidr_blocks = ["0.0.0.0/0"] # source refers to where you getting traffic from public(internet)
   security_group_id = module.frontend.sg_id #creating inboound rule in frontend security group
 }
 
@@ -132,7 +132,7 @@ resource "aws_security_group_rule" "bastion_public" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks = ["0.0.0.0/0"] # source refers to where you getting traffic from public
-  security_group_id = module.bastion.sg_id
+  security_group_id = module.bastion.sg_id #creating inboound rule in bastion security group
 }
 
 # ansible to public
@@ -142,7 +142,7 @@ resource "aws_security_group_rule" "ansible_public" {
   to_port           = 22
   protocol          = "tcp"
   cidr_blocks = ["0.0.0.0/0"] # source refers to where you getting traffic from public
-  security_group_id = module.ansible.sg_id
+  security_group_id = module.ansible.sg_id #creating inboound rule in ansible security group
 }
 
 
