@@ -8,7 +8,7 @@ resource "aws_ssm_parameter" "vpc_id" { # accessing vpc_id from the module and s
 resource "aws_ssm_parameter" "public_subnet_ids" {
   name  = "/${var.project_name}/${var.environment}/public_subnet_ids"
   type  = "StringList" # because of two subnets it will be a datatype of 2 tuple elements,since we should include StringList
-  value = join(",",module.vpc.public_subnet_ids) # converting list to StringList 
+  value = join(",",module.vpc.public_subnet_ids) # converting list to StringList by using seperators
 }
 # ["id1","id2"] ---> terraform format(2 subnets List datatype)
 # [id1,id2] ---> ASW ssm format(2 subnets of StringList datatype )
@@ -16,7 +16,7 @@ resource "aws_ssm_parameter" "public_subnet_ids" {
 resource "aws_ssm_parameter" "private_subnet_ids" {
   name  = "/${var.project_name}/${var.environment}/private_subnet_ids"
   type  = "StringList"
-  value = join(",",module.vpc.private_subnet_ids) # converting list to StringList
+  value = join(",",module.vpc.private_subnet_ids) # converting list to StringList by using seperators
 }
 
 # here aws_ssm_parameter will acts as the storage for the vpc_id of module vpc which can be useful for the extracting the data of vpc,sg,database
